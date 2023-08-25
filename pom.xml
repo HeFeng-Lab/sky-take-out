@@ -25,6 +25,8 @@
         <knife4j>3.0.3</knife4j>
         <mybatis.spring>3.0.2</mybatis.spring>
         <mysql.connector>8.0.33</mysql.connector>
+        <mybatis.plus>3.5.3.1</mybatis.plus>
+        <jsonwebtoken>0.11.5</jsonwebtoken>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -58,8 +60,32 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus</artifactId>
-                <version>3.5.3.1</version>
+                <version>${mybatis.plus}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jsonwebtoken}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jsonwebtoken}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jsonwebtoken}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+
+
+
 
 
 

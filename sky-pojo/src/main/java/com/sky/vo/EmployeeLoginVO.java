@@ -16,4 +16,6 @@ public class EmployeeLoginVO {
 
   private String name;
 
+  private String token;
+
 }
