@@ -13,6 +13,7 @@ import io.jsonwebtoken.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,6 +61,11 @@ public class EmployeeController {
     if (employee.getStatus() == 0) {
       return Result.error("账户已禁用");
     }
+
+    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(employeeLoginDTO.getUsername(), employeeLoginDTO.getPassword());
+
+    log.info(String.valueOf(usernamePasswordAuthenticationToken));
+
 
     request.getSession().setAttribute("employee", employee.getId());
 
