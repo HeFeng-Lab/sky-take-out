@@ -1,10 +1,11 @@
 package com.sky.controller.admin;
 
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.service.EmployeeService;
+import com.sky.vo.EmployeeLoginVO;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class EmployeeController {
   EmployeeService employeeService;
 
   @PostMapping("/login")
-  public void login(@RequestBody EmployeeLoginDTO employeeLoginDTO){
+  public EmployeeLoginVO login(HttpServletRequest request, @RequestBody EmployeeLoginDTO employeeLoginDTO) {
     log.info("员工登录： {}", employeeLoginDTO);
 
     LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
@@ -31,5 +32,15 @@ public class EmployeeController {
     Employee employee = employeeService.getOne(queryWrapper);
 
     log.info(String.valueOf(employee));
+
+    request.getSession().setAttribute("employee", employee.getId());
+
+    EmployeeLoginVO employeeLoginVO = EmployeeLoginVO.builder()
+            .id(employee.getId())
+            .userName(employee.getName())
+            .name(employee.getName())
+            .build();
+
+    return employeeLoginVO;
   }
 }
