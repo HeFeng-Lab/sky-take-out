@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -52,8 +53,12 @@ public class EmployeeController {
       return Result.error("登录失败");
     }
 
+    String password = DigestUtils.md5DigestAsHex((employeeLoginDTO.getPassword()).getBytes());
+
+    log.info(password);
+
     // 密码不匹配
-    if (!employee.getPassword().equals(employeeLoginDTO.getPassword())) {
+    if (!password.equals(employee.getPassword())) {
       return Result.error("登录失败");
     }
 
@@ -61,10 +66,6 @@ public class EmployeeController {
     if (employee.getStatus() == 0) {
       return Result.error("账户已禁用");
     }
-
-    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(employeeLoginDTO.getUsername(), employeeLoginDTO.getPassword());
-
-    log.info(String.valueOf(usernamePasswordAuthenticationToken));
 
 
     request.getSession().setAttribute("employee", employee.getId());
@@ -87,5 +88,11 @@ public class EmployeeController {
             .build();
 
     return Result.success(employeeLoginVO);
+  }
+
+  @PostMapping("/logout")
+  public Result<String> logout() {
+    BaseContext.removeCurrentId();
+    return Result.success();
   }
 }
