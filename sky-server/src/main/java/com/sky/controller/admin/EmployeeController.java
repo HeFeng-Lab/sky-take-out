@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.context.BaseContext;
@@ -10,11 +11,9 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
-import io.jsonwebtoken.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +29,7 @@ import java.util.Map;
 public class EmployeeController {
 
   @Autowired
-  EmployeeService employeeService;
+  private EmployeeService employeeService;
 
   @Autowired
   private JwtProperties jwtProperties;

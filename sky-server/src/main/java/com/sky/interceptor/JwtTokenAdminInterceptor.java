@@ -20,7 +20,6 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
   @Autowired
   private JwtProperties jwtProperties;
 
-
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
