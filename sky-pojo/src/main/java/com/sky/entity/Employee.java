@@ -1,11 +1,12 @@
 package com.sky.entity;
 
 import lombok.Data;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
+@Schema(description = "账户登陆请求参数")
 public class Employee implements Serializable {
   /**
    *   这一行代码是用于实现 Java 对象的序列化和反序列化过程中的版本控制的。
@@ -20,6 +21,7 @@ public class Employee implements Serializable {
    */
   private static final long serialVersionUID = 1L;
 
+  @Schema(description = "主键id",defaultValue = "1")
   private Long id;
   private String name;
   private String username;

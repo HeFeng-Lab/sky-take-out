@@ -20,3 +20,27 @@ sky:
     user-secret-key: 123qwe123123qwe123123qwe123123qwe123123qwe123123qwe123123qwe123123qwe123
     user-ttl: 7200000
     user-token-name: authentication
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v1/api-docs
+
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.sky.controller
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+  basic:
+    enable: false
+    username: abc
+    password: 123
