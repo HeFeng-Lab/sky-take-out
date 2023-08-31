@@ -1,10 +1,13 @@
 package com.sky.controller.admin;
 
 
+import com.sky.result.PageResult;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.context.BaseContext;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
 import com.sky.result.Result;
@@ -17,10 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -103,22 +103,31 @@ public class EmployeeController {
 
   @PostMapping
   @Operation(summary = "新增员工", description = "")
-  public Result<String> save(HttpServletRequest request, @RequestBody Employee employee) {
-    log.info("新增员工: {}", employee);
+  public Result<String> save(HttpServletRequest request, @RequestBody EmployeeDTO employeeDTO) {
+    log.info("新增员工: {}", employeeDTO);
 
     // 初始化密码
-    employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+    // employeeDTO.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+    //
+    // employeeDTO.setCreateTime(LocalDateTime.now());
+    // employeeDTO.setUpdateTime(LocalDateTime.now());
+    //
+    // // 获取当前登录用户信息
+    // Long employId = (Long) request.getSession().getAttribute("employeeId");
+    // employeeDTO.setCreateUser(employId);
+    // employeeDTO.setUpdateUser(employId);
 
-    employee.setCreateTime(LocalDateTime.now());
-    employee.setUpdateTime(LocalDateTime.now());
-
-    // 获取当前登录用户信息
-    Long employId = (Long) request.getSession().getAttribute("employeeId");
-    employee.setCreateUser(employId);
-    employee.setUpdateUser(employId);
-
-    employeeService.save(employee);
+    employeeService.save(employeeDTO);
 
     return Result.success("新增员工成功");
+  }
+
+
+  @GetMapping("page")
+  @Operation(summary = "员工列表分页查询", description = "")
+  public Result<PageResult> queryEmployee(EmployeePageQueryDTO employeePageQueryDTO) {
+    log.info("员工列表分页查询: {}", employeePageQueryDTO);
+    PageResult pageResult =  employeeService.page(employeePageQueryDTO);
+    return Result.success(pageResult);
   }
 }
