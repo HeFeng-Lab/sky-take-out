@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +72,7 @@ public class EmployeeController {
     }
 
 
-    request.getSession().setAttribute("employee", employee.getId());
+    request.getSession().setAttribute("employeeId", employee.getId());
 
     Map<String, Object> claims = new HashMap<>();
     claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
@@ -98,5 +99,26 @@ public class EmployeeController {
   public Result<String> logout() {
     BaseContext.removeCurrentId();
     return Result.success();
+  }
+
+  @PostMapping
+  @Operation(summary = "新增员工", description = "")
+  public Result<String> save(HttpServletRequest request, @RequestBody Employee employee) {
+    log.info("新增员工: {}", employee);
+
+    // 初始化密码
+    employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+
+    employee.setCreateTime(LocalDateTime.now());
+    employee.setUpdateTime(LocalDateTime.now());
+
+    // 获取当前登录用户信息
+    Long employId = (Long) request.getSession().getAttribute("employeeId");
+    employee.setCreateUser(employId);
+    employee.setUpdateUser(employId);
+
+    employeeService.save(employee);
+
+    return Result.success("新增员工成功");
   }
 }
