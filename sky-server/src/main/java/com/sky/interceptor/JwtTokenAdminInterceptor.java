@@ -24,7 +24,8 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
     if (!(handler instanceof HandlerMethod)) {
-      return true;
+      response.setStatus(401);
+      return false;
     }
 
     String token = request.getHeader(jwtProperties.getAdminTokenName());
