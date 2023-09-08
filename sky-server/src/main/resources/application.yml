@@ -8,6 +8,13 @@ spring:
     username: root
     password: 123456
 
+logging:
+  level:
+    com:
+      sky:
+        mapper: debug
+        service: info
+        controller: info
 
 sky:
   jwt:
@@ -44,3 +51,6 @@ knife4j:
     enable: false
     username: abc
     password: 123
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
