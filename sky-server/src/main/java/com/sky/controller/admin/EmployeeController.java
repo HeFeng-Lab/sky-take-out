@@ -39,7 +39,7 @@ public class EmployeeController {
   private JwtProperties jwtProperties;
 
 
-  @Operation(summary = "用户登录",description = "根据账号密码进行登录")
+  @Operation(summary = "用户登录", description = "根据账号密码进行登录")
   @PostMapping("/login")
   public Result<EmployeeLoginVO> login(HttpServletRequest request, @RequestBody EmployeeLoginDTO employeeLoginDTO) {
     log.info("员工登录： {}", employeeLoginDTO);
@@ -94,7 +94,7 @@ public class EmployeeController {
     return Result.success(employeeLoginVO);
   }
 
-  @Operation(summary = "退出登录",description = "")
+  @Operation(summary = "退出登录", description = "")
   @PostMapping("/logout")
   public Result<String> logout() {
     BaseContext.removeCurrentId();
@@ -116,7 +116,21 @@ public class EmployeeController {
   @Operation(summary = "员工列表分页查询", description = "")
   public Result<PageResult> queryEmployee(EmployeePageQueryDTO employeePageQueryDTO) {
     log.info("员工列表分页查询: {}", employeePageQueryDTO);
-    PageResult pageResult =  employeeService.page(employeePageQueryDTO);
+    PageResult pageResult = employeeService.page(employeePageQueryDTO);
     return Result.success(pageResult);
+  }
+
+  /**
+   * 启用禁用员工账号
+   * @param status
+   * @param id
+   * @return
+   */
+  @PostMapping("/status/{status}")
+  @Operation(summary = "启用/禁用员工账号")
+  public Result<String> startOrStop(@PathVariable Integer status, Long id) {
+    log.info("启用或禁用员员工账户：{},{}", status, id);
+    employeeService.startOrStop(status, id);
+    return Result.success();
   }
 }

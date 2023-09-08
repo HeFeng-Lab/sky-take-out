@@ -21,5 +21,8 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
   int insert(Employee employee);
 
   Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+  @AutoFill(value = OperationType.UPDATE)
+  void update(Employee employee);
 }
 

@@ -58,4 +58,13 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     return new PageResult(currentPage, pageSize, page.getTotal(), page.getResult());
   }
+
+  @Override
+  public void startOrStop(Integer status, Long id) {
+    Employee employee=Employee.builder()
+            .id(id)
+            .status(status)
+            .build();
+    employeeMapper.update(employee);
+  }
 }

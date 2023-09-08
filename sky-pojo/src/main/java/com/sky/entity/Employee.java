@@ -1,13 +1,19 @@
 package com.sky.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "账户登陆请求参数")
 public class Employee implements Serializable {
   /**
