@@ -106,17 +106,6 @@ public class EmployeeController {
   public Result<String> save(HttpServletRequest request, @RequestBody EmployeeDTO employeeDTO) {
     log.info("新增员工: {}", employeeDTO);
 
-    // 初始化密码
-    // employeeDTO.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-    //
-    // employeeDTO.setCreateTime(LocalDateTime.now());
-    // employeeDTO.setUpdateTime(LocalDateTime.now());
-    //
-    // // 获取当前登录用户信息
-    // Long employId = (Long) request.getSession().getAttribute("employeeId");
-    // employeeDTO.setCreateUser(employId);
-    // employeeDTO.setUpdateUser(employId);
-
     employeeService.save(employeeDTO);
 
     return Result.success("新增员工成功");

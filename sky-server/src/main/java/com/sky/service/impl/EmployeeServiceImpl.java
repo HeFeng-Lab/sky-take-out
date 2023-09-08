@@ -46,12 +46,16 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
   @Override
   public PageResult page(EmployeePageQueryDTO employeePageQueryDTO) {
+    int currentPage = employeePageQueryDTO.getPage();
+    int pageSize = employeePageQueryDTO.getPageSize();
+
     PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
 
     Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
 
     log.info("page: {}", page);
 
-    return new PageResult(page.getTotal(),page.getResult());
+
+    return new PageResult(currentPage, pageSize, page.getTotal(), page.getResult());
   }
 }
