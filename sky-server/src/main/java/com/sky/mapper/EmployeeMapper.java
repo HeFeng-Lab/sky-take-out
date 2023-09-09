@@ -9,6 +9,7 @@ import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -24,5 +25,8 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
 
   @AutoFill(value = OperationType.UPDATE)
   void update(Employee employee);
+
+  @Select("select * from employee where id = #{id}")
+  Employee getById(Long id);
 }
 
